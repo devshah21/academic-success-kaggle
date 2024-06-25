@@ -38,7 +38,7 @@ class NeuralNet(nn.Module):
         out = self.fc2(out)
         return out
 
-
+print(X.shape[1])
 input_size = X.shape[1]
 hidden_size = 100
 num_classes = len(np.unique(y))
@@ -53,7 +53,7 @@ optimizer = optim.Adam(model.parameters(), lr=0.001)
 num_epochs = 100
 batch_size = 32
 
-# Training loop
+
 for epoch in range(num_epochs):
     # Shuffle the data at the beginning of each epoch
     permutation = torch.randperm(X.size()[0])
@@ -74,8 +74,7 @@ for epoch in range(num_epochs):
     if (epoch+1) % 10 == 0:
         print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
 
-# Evaluation
-model.eval()  # Set the model to evaluation mode
+model.eval() 
 with torch.no_grad():
     outputs = model(X)
     _, predicted = torch.max(outputs.data, 1)
