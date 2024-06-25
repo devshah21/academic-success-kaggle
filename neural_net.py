@@ -71,3 +71,12 @@ for epoch in range(num_epochs):
     
     if (epoch+1) % 10 == 0:
         print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+
+# Evaluation
+model.eval()  # Set the model to evaluation mode
+with torch.no_grad():
+    outputs = model(X)
+    _, predicted = torch.max(outputs.data, 1)
+    accuracy = (predicted == y).sum().item() / y.size(0)
+
+print(f'Accuracy: {accuracy * 100:.2f}%')
