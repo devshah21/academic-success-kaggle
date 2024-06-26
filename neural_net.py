@@ -23,17 +23,16 @@ print(X, y)
 
 
 class NeuralNet(nn.Module):
+    
     def __init__(self, input_size, hidden_size1, hidden_size2, num_classes):
         super(NeuralNet, self).__init__()
         self.fc1 = nn.Linear(input_size, hidden_size1)
         self.bn1 = nn.BatchNorm1d(hidden_size1)
         self.relu1 = nn.ReLU()
-        self.dropout1 = nn.Dropout(0.5)
         
         self.fc2 = nn.Linear(hidden_size1, hidden_size2)
         self.bn2 = nn.BatchNorm1d(hidden_size2)
-        self.relu2 = nn.ReLU()
-        self.dropout2 = nn.Dropout(0.5)
+        self.relu2 = nn.Sigmoid()
         
         self.fc3 = nn.Linear(hidden_size2, num_classes)
     
@@ -41,20 +40,18 @@ class NeuralNet(nn.Module):
         out = self.fc1(x)
         out = self.bn1(out)
         out = self.relu1(out)
-        out = self.dropout1(out)
         
         out = self.fc2(out)
         out = self.bn2(out)
         out = self.relu2(out)
-        out = self.dropout2(out)
         
         out = self.fc3(out)
         return out
 
 print(X.shape[1])
 input_size = X.shape[1]
-hidden_size = 100
-hidden_size2 = 50
+hidden_size = 128
+hidden_size2 = 64
 num_classes = len(np.unique(y))
 
 model = NeuralNet(input_size, hidden_size, hidden_size2, num_classes)
